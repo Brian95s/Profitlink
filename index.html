@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es"><head>
+<!DOCTYPE html><html lang="es">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ProfitLink - Con Menú</title>
@@ -14,12 +15,17 @@
     }
     .background-logo {
       position: fixed;
-      bottom: 20px;
+      bottom: 50px;
       left: 50%;
       transform: translateX(-50%);
-      width: 150px;
+      width: 60%;
       height: auto;
-      z-index: 5;
+      opacity: 0.2;
+      background-image: url('https://raw.githubusercontent.com/Brian95s/Profitlink/refs/heads/main/assets/images/file_000000001a1851f6ab7998f00d3f9709_conversation_id%3D67f03402-456c-8005-b1ea-3e3f4af874d3%26message_id%3D21312bb7-8f4e-438f-88d3-a72cf1d6fcab.PNG');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      z-index: 1;
       pointer-events: none;
     }
     .header {
@@ -82,7 +88,7 @@
       background-color: #444;
     }
     .top-description {
-      margin-top: 90px;
+      margin-top: 70px;
       padding: 20px 30px;
       text-align: center;
       background-color: rgba(0,0,0,0.4);
@@ -101,7 +107,7 @@
       margin: 8px 0;
     }
     .content {
-      padding: 20px;
+      padding: 320px 20px 20px;
       text-align: center;
       position: relative;
     }
@@ -124,13 +130,16 @@
     <p>Además, contamos con un <strong>programa de referidos</strong>, donde podrás ganar un porcentaje por cada referido o retirar dinero directamente a tu cuenta.</p>
     <p><strong>Métodos de depósito y retiro:</strong> Aceptamos ARS (pesos argentinos) y USDT.</p>
     <p><strong>¡Gracias por confiar en ProfitLink!</strong></p>
-  </div>  <img class="background-logo" src="https://raw.githubusercontent.com/Brian95s/Profitlink/refs/heads/main/assets/images/file_000000001a1851f6ab7998f00d3f9709_conversation_id%3D67f03402-456c-8005-b1ea-3e3f4af874d3%26message_id%3D21312bb7-8f4e-438f-88d3-a72cf1d6fcab.PNG" alt="ProfitLink Logo" />  <div class="sidebar" id="sidebar">
+  </div>  <div class="background-logo"></div>  <div class="sidebar" id="sidebar">
     <a href="#">Perfil</a>
     <a href="#">Depósito</a>
     <a href="#">Retiro</a>
     <a href="#">Calculadora</a>
     <a href="#">Referidos</a>
     <a href="#">Cerrar sesión</a>
+  </div>  <div class="content">
+    <h1 class="welcome-message">Plataforma de inversión activa</h1>
+    <p>Este es un ejemplo limpio del menú principal funcionando.</p>
   </div>  <script>
     document.addEventListener("DOMContentLoaded", function () {
       const user = "UsuarioDemo";
