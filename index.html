@@ -12,77 +12,80 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 10px 20px;
-      width: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-    .menu-icon {
-      font-size: 24px;
-      cursor: pointer;
-    }
-    .welcome-message {
-      font-size: 20px;
-      flex-grow: 1;
-      text-align: center;
-    }
-    .vip-section {
-      text-align: right;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    }
-    .vip-box {
-      background-color: #222;
-      padding: 5px 10px;
-      border-radius: 8px;
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-    .earnings-bar {
-      height: 20px;
-      background-color: #333;
-      border-radius: 10px;
-      width: 120px;
-      overflow: hidden;
-    }
-    .earnings-fill {
-      height: 100%;
-      background-color: limegreen;
-      border-radius: 10px;
-      width: 0%;
-      transition: width 1s ease-in-out;
-    }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -220px;
-      width: 220px;
-      height: 100%;
-      background-color: #222;
-      padding: 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-      transition: left 0.3s ease;
-      z-index: 100;
-    }
-    .sidebar.show {
-      left: 0;
-    }
-    .sidebar a {
-      display: block;
-      margin: 15px 0;
-      color: white;
-      text-decoration: none;
-      font-size: 18px;
-    }
+    }.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+}
+
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.welcome-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.vip-section {
+  display: flex;
+  align-items: center;
+}
+
+.vip-box {
+  background-color: #222;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.earnings-bar {
+  height: 20px;
+  background-color: #333;
+  border-radius: 10px;
+  margin-left: 10px;
+  width: 100px;
+  position: relative;
+}
+
+.earnings-fill {
+  height: 100%;
+  background-color: limegreen;
+  border-radius: 10px;
+  width: 0%;
+  transition: width 1s ease-in-out;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -200px;
+  width: 200px;
+  height: 100%;
+  background-color: #222;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+  transition: left 0.3s ease;
+  z-index: 100;
+}
+
+.sidebar.show {
+  left: 0;
+}
+
+.sidebar a {
+  display: block;
+  margin: 10px 0;
+  color: white;
+  text-decoration: none;
+}
+
   </style>
 </head>
 <body onclick="closeSidebar()">
@@ -94,11 +97,13 @@
   </div>
   <div class="header">
     <div class="menu-icon" onclick="toggleSidebar(event)">☰</div>
-    <div class="welcome-message" id="welcome-message">Bienvenido, Usuario</div>
-    <div class="vip-section">
-      <div class="vip-box" id="vip-box">Nivel VIP: 1</div>
-      <div class="earnings-bar">
-        <div class="earnings-fill" id="earnings-fill"></div>
+    <div class="welcome-container">
+      <div class="welcome-message" id="welcome-message">Bienvenido, Usuario</div>
+      <div class="vip-section">
+        <div class="vip-box" id="vip-box">Nivel VIP: 1</div>
+        <div class="earnings-bar">
+          <div class="earnings-fill" id="earnings-fill"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -132,4 +137,4 @@ updateEarnings();
 
   </script>
 </body>
-</html>
+      </html>
