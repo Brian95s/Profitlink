@@ -13,8 +13,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      text-align: center;
     }
     .header {
       display: flex;
@@ -30,11 +28,18 @@
     .menu-icon {
       font-size: 24px;
       cursor: pointer;
+      z-index: 200;
       color: white;
     }
     .welcome-container {
+      display: flex;
+      align-items: center;
       flex-grow: 1;
-      text-align: center;
+      justify-content: center;
+    }
+    .vip-section {
+      display: flex;
+      align-items: center;
     }
     .vip-box {
       background-color: #222;
@@ -43,32 +48,50 @@
       font-size: 14px;
       margin-left: 10px;
     }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background-color: #222;
-      padding: 20px;
-      transition: left 0.3s ease;
-      z-index: 1500;
+    .earnings-bar {
+      height: 20px;
+      background-color: #333;
+      border-radius: 10px;
+      margin-left: 10px;
+      width: 100px;
+      position: relative;
     }
-    .sidebar.show {
-      left: 0;
+    .earnings-fill {
+      height: 100%;
+      background-color: limegreen;
+      border-radius: 10px;
+      width: 0%;
+      transition: width 1s ease-in-out;
     }
     .language-selector {
-      display: flex;
-      gap: 10px;
-    }
-    .language-selector img {
-      width: 30px;
-      height: 20px;
+      margin-left: 15px;
       cursor: pointer;
+      position: relative;
+    }
+    .language-menu {
+      display: none;
+      position: absolute;
+      background: white;
+      color: black;
+      border-radius: 5px;
+      padding: 10px;
+      top: 25px;
+      right: 0;
+      box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+    .language-menu a {
+      display: block;
+      padding: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+    .language-selector:hover .language-menu {
+      display: block;
     }
   </style>
 </head>
-<body onclick="closeSidebar(event)">
+<body>
   <div class="sidebar" id="sidebar">
     <a href="#">Perfil</a>
     <a href="#">Depósito</a>
@@ -84,19 +107,21 @@
     <div class="welcome-container">
       <div class="welcome-message" id="welcome-message">Bienvenido, Usuario</div>
       <div class="vip-box" id="vip-box">Nivel VIP: 1</div>
+      <div class="earnings-bar"><div class="earnings-fill" id="earnings-fill"></div></div>
     </div>
     <div class="language-selector">
-      <img src="spain.png" alt="Español" onclick="changeLanguage('es')">
-      <img src="usa.png" alt="English" onclick="changeLanguage('en')">
-      <img src="portugal.png" alt="Português" onclick="changeLanguage('pt')">
-      <img src="china.png" alt="中文" onclick="changeLanguage('zh')">
+      🌍 Idioma
+      <div class="language-menu">
+        <a onclick="changeLanguage('es')">🇪🇸 Español</a>
+        <a onclick="changeLanguage('en')">🇺🇸 Inglés</a>
+        <a onclick="changeLanguage('pt')">🇵🇹 Portugués</a>
+        <a onclick="changeLanguage('zh')">🇨🇳 Chino</a>
+      </div>
     </div>
   </div>  
   <div class="content">
     <div class="description-box">
-      ProfitLink es un sistema de inversión diseñado para conectar a los usuarios con proyectos de distintas empresas y emprendedores. Los inversionistas pueden elegir entre opciones semanales y quincenales, con tasas de retorno del 7% semanal hasta el 20% quincenal.<br><br>
-      Las operaciones de depósito y retiro se realizan en pesos argentinos o USDT, brindando flexibilidad y seguridad. Además, nuestro sistema de referidos permite generar ingresos adicionales, con la posibilidad de retirar ganancias una vez alcanzado el número mínimo de invitados.<br><br>
-      Invierte con confianza y haz que tu dinero trabaje por ti con ProfitLink.
+      ProfitLink es un sistema de inversión diseñado para conectar a los usuarios con proyectos de distintas empresas y emprendedores...
     </div>
   </div>  
   <script>
@@ -113,8 +138,9 @@ function closeSidebar(event) {
 }
 
 function changeLanguage(lang) {
-  alert("Cambiando idioma a " + lang);
-  // Aquí se puede implementar la lógica para cambiar el idioma
+  alert(`Cambiando idioma a: ${lang}`);
+  localStorage.setItem('language', lang);
+  location.reload();
 }
 
 const recarga = parseInt(localStorage.getItem('recarga')) || 100;
@@ -125,6 +151,17 @@ else if (recarga >= 500) vipLevel = 4;
 else if (recarga >= 300) vipLevel = 3;
 else if (recarga >= 150) vipLevel = 2;
 vipBox.textContent = `Nivel VIP: ${vipLevel}`;
+
+let earnings = 0;
+function updateEarnings() {
+  earnings += Math.random() * 5;
+  document.getElementById("earnings-fill").style.width = `${Math.min((earnings / 100) * 100, 100)}%`;
+}
+
+setInterval(updateEarnings, 60000);
+updateEarnings();
+
+document.body.addEventListener("click", closeSidebar);
 
   </script>
 </body>
