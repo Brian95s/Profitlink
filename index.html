@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="es">
-<head>
+<!DOCTYPE html><html lang="es"><head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ProfitLink - Con Menú</title>
@@ -15,16 +14,16 @@
     }
     .background-logo {
       position: fixed;
-      bottom: 10%;
-      left: 5%;
-      width: 150px;
-      height: auto;
+      bottom: 10px;
+      left: 10px;
+      width: 80px;
+      height: 80px;
       background-image: url('https://raw.githubusercontent.com/Brian95s/Profitlink/main/assets/images/logo.png');
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
-      opacity: 0.7;
-      z-index: 1;
+      opacity: 1;
+      z-index: 5;
       pointer-events: none;
     }
     .header {
@@ -94,6 +93,7 @@
   </style>
 </head>
 <body>
+  <div class="background-logo"></div>
   <div class="header">
     <div class="user-info">
       <span id="welcome-message">Bienvenido usuario: Cargando...</span>
@@ -113,7 +113,6 @@
     <h1 class="welcome-message">Bienvenido a ProfitLink</h1>
     <p>Este es un ejemplo limpio del menú principal funcionando.</p>
   </div>
-  <div class="background-logo"></div>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const user = "UsuarioDemo";
@@ -121,17 +120,18 @@
       document.getElementById("welcome-message").textContent = `Bienvenido usuario: ${user}`;
       document.getElementById("vip-level").textContent = vipLevel;
       const menuToggle = document.getElementById("menu-toggle");
-      const sidebar = document.getElementById("sidebar");
-      menuToggle.addEventListener("click", function (event) {
-        event.stopPropagation();
-        sidebar.classList.toggle("show");
-      });
-      document.addEventListener("click", function (event) {
-        if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
-          sidebar.classList.remove("show");
-        }
-      });
-    });
+      const sidebar = document.getElementById("sidebar");menuToggle.addEventListener("click", function (event) {
+    event.stopPropagation();
+    sidebar.classList.toggle("show");
+  });
+
+  document.addEventListener("click", function (event) {
+    if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+      sidebar.classList.remove("show");
+    }
+  });
+});
+
   </script>
 </body>
 </html>
