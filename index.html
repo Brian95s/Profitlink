@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -14,6 +13,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      text-align: center;
     }
     .header {
       display: flex;
@@ -29,18 +30,11 @@
     .menu-icon {
       font-size: 24px;
       cursor: pointer;
-      z-index: 200;
       color: white;
     }
     .welcome-container {
-      display: flex;
-      align-items: center;
       flex-grow: 1;
-      justify-content: center;
-    }
-    .vip-section {
-      display: flex;
-      align-items: center;
+      text-align: center;
     }
     .vip-box {
       background-color: #222;
@@ -48,26 +42,6 @@
       border-radius: 8px;
       font-size: 14px;
       margin-left: 10px;
-    }
-    .earnings-bar {
-      height: 20px;
-      background-color: #333;
-      border-radius: 10px;
-      margin-left: 10px;
-      width: 100px;
-      position: relative;
-    }
-    .earnings-fill {
-      height: 100%;
-      background-color: limegreen;
-      border-radius: 10px;
-      width: 0%;
-      transition: width 1s ease-in-out;
-    }
-    .language-selector {
-      margin-left: 15px;
-      color: white;
-      cursor: pointer;
     }
     .sidebar {
       position: fixed;
@@ -77,28 +51,24 @@
       height: 100%;
       background-color: #222;
       padding: 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
       transition: left 0.3s ease;
       z-index: 1500;
     }
     .sidebar.show {
       left: 0;
     }
-    .sidebar a {
-      display: block;
-      margin: 10px 0;
-      color: white;
-      text-decoration: none;
-      padding: 10px;
-      border-radius: 5px;
-      transition: background 0.3s;
+    .language-selector {
+      display: flex;
+      gap: 10px;
     }
-    .sidebar a:hover {
-      background-color: #444;
+    .language-selector img {
+      width: 30px;
+      height: 20px;
+      cursor: pointer;
     }
   </style>
 </head>
-<body>
+<body onclick="closeSidebar(event)">
   <div class="sidebar" id="sidebar">
     <a href="#">Perfil</a>
     <a href="#">Depósito</a>
@@ -115,7 +85,12 @@
       <div class="welcome-message" id="welcome-message">Bienvenido, Usuario</div>
       <div class="vip-box" id="vip-box">Nivel VIP: 1</div>
     </div>
-    <div class="language-selector" onclick="changeLanguage()">🌍 Cambiar idioma</div>
+    <div class="language-selector">
+      <img src="spain.png" alt="Español" onclick="changeLanguage('es')">
+      <img src="usa.png" alt="English" onclick="changeLanguage('en')">
+      <img src="portugal.png" alt="Português" onclick="changeLanguage('pt')">
+      <img src="china.png" alt="中文" onclick="changeLanguage('zh')">
+    </div>
   </div>  
   <div class="content">
     <div class="description-box">
@@ -125,43 +100,32 @@
     </div>
   </div>  
   <script>
-    document.getElementById("welcome-message").textContent = `Bienvenido, ${localStorage.getItem('username') || 'Usuario'}`;
+    document.getElementById("welcome-message").textContent = `Bienvenido, ${localStorage.getItem('username') || 'Usuario'}`;function toggleSidebar(event) {
+  event.stopPropagation();
+  document.getElementById("sidebar").classList.toggle("show");
+}
 
-    function toggleSidebar(event) {
-      event.stopPropagation();
-      document.getElementById("sidebar").classList.toggle("show");
-    }
+function closeSidebar(event) {
+  const sidebar = document.getElementById("sidebar");
+  if (!event.target.closest(".sidebar") && sidebar.classList.contains("show")) {
+    sidebar.classList.remove("show");
+  }
+}
 
-    function closeSidebar(event) {
-      const sidebar = document.getElementById("sidebar");
-      if (!event.target.closest(".sidebar") && sidebar.classList.contains("show")) {
-        sidebar.classList.remove("show");
-      }
-    }
+function changeLanguage(lang) {
+  alert("Cambiando idioma a " + lang);
+  // Aquí se puede implementar la lógica para cambiar el idioma
+}
 
-    function changeLanguage() {
-      alert("Función de cambio de idioma en desarrollo.");
-    }
+const recarga = parseInt(localStorage.getItem('recarga')) || 100;
+const vipBox = document.getElementById("vip-box");
+let vipLevel = 1;
+if (recarga >= 1000) vipLevel = 5;
+else if (recarga >= 500) vipLevel = 4;
+else if (recarga >= 300) vipLevel = 3;
+else if (recarga >= 150) vipLevel = 2;
+vipBox.textContent = `Nivel VIP: ${vipLevel}`;
 
-    const recarga = parseInt(localStorage.getItem('recarga')) || 100;
-    const vipBox = document.getElementById("vip-box");
-    let vipLevel = 1;
-    if (recarga >= 1000) vipLevel = 5;
-    else if (recarga >= 500) vipLevel = 4;
-    else if (recarga >= 300) vipLevel = 3;
-    else if (recarga >= 150) vipLevel = 2;
-    vipBox.textContent = `Nivel VIP: ${vipLevel}`;
-
-    let earnings = 0;
-    function updateEarnings() {
-      earnings += Math.random() * 5;
-      document.getElementById("earnings-fill").style.width = `${Math.min((earnings / 100) * 100, 100)}%`;
-    }
-
-    setInterval(updateEarnings, 60000);
-    updateEarnings();
-
-    document.body.addEventListener("click", closeSidebar);
   </script>
 </body>
 </html>
