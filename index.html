@@ -28,39 +28,7 @@
     .menu-icon {
       font-size: 24px;
       cursor: pointer;
-      color: white;
-    }
-    .welcome-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-grow: 1;
-      text-align: center;
-    }
-    .vip-box {
-      background-color: #222;
-      padding: 5px 10px;
-      border-radius: 8px;
-      font-size: 14px;
-      margin-left: 10px;
-    }
-    .earnings-bar {
-      height: 20px;
-      background-color: #444;
-      border-radius: 10px;
-      margin-top: 20px;
-      width: 80%;
-      position: relative;
-      overflow: hidden;
-    }
-    .earnings-fill {
-      height: 100%;
-      background-color: limegreen;
-      border-radius: 10px;
-      width: 10%; /* Valor inicial */
-      transition: width 1s ease-in-out;
-    }
-    .language-selector {
+      z-index: 200;
       color: white;
     }
     .sidebar {
@@ -90,14 +58,12 @@
     .sidebar a:hover {
       background-color: #444;
     }
-    .content {
-      margin-top: 80px;
-      text-align: center;
-      padding: 20px;
-    }
   </style>
 </head>
 <body>
+  <div class="header">
+    <div class="menu-icon" onclick="toggleSidebar(event)">☰</div>
+  </div>
   <div class="sidebar" id="sidebar">
     <a href="#">Perfil</a>
     <a href="#">Depósito</a>
@@ -107,54 +73,18 @@
     <a href="#">Referidos</a>
     <a href="#">Términos y condiciones</a>
     <a href="#">Cerrar sesión</a>
-  </div>  
-  <div class="header">
-    <div class="menu-icon" onclick="toggleSidebar(event)">☰</div>
-    <div class="welcome-container">
-      <div id="welcome-message">Bienvenido, Usuario</div>
-      <div class="vip-box" id="vip-box">Nivel VIP: 1</div>
-    </div>
-    <select id="language-select" class="language-selector" onchange="changeLanguage()">
-      <option value="es">🇪🇸 Español</option>
-      <option value="en">🇺🇸 English</option>
-      <option value="pt">🇵🇹 Português</option>
-      <option value="zh">🇨🇳 中文</option>
-    </select>
-  </div>  
-  <div class="content">
-    <div id="description-box">
-      ProfitLink es un sistema de inversión diseñado para conectar a los usuarios con proyectos de distintas empresas y emprendedores.
-    </div>
-    <div class="earnings-bar">
-      <div class="earnings-fill" id="earnings-fill"></div>
-    </div>
-  </div>  
+  </div>
   <script>
     function toggleSidebar(event) {
       event.stopPropagation();
       document.getElementById("sidebar").classList.toggle("show");
     }
-    function closeSidebar(event) {
+    document.body.addEventListener("click", function(event) {
       const sidebar = document.getElementById("sidebar");
       if (!event.target.closest(".sidebar") && sidebar.classList.contains("show")) {
         sidebar.classList.remove("show");
       }
-    }
-    document.body.addEventListener("click", closeSidebar);function changeLanguage() {
-  const lang = document.getElementById("language-select").value;
-  localStorage.setItem('language', lang);
-  alert("Idioma cambiado a " + lang);
-  location.reload();
-}
-
-function updateEarnings() {
-  let fill = document.getElementById("earnings-fill");
-  let width = parseInt(fill.style.width) || 10;
-  width = (width + 10) % 100;
-  fill.style.width = width + "%";
-}
-setInterval(updateEarnings, 60000);
-
+    });
   </script>
 </body>
 </html>
