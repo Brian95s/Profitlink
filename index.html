@@ -13,83 +13,76 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-    }.header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 10px 20px;
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-
-.menu-icon {
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.welcome-message {
-  font-size: 20px;
-  text-align: center;
-  flex-grow: 1;
-}
-
-.vip-section {
-  text-align: right;
-}
-
-.vip-box {
-  background-color: #222;
-  padding: 5px 10px;
-  border-radius: 8px;
-  display: inline-block;
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.earnings-bar {
-  height: 20px;
-  background-color: #333;
-  border-radius: 10px;
-  margin-top: 5px;
-  position: relative;
-}
-
-.earnings-fill {
-  height: 100%;
-  background-color: limegreen;
-  border-radius: 10px;
-  width: 0%;
-  transition: width 1s ease-in-out;
-}
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: -200px;
-  width: 200px;
-  height: 100%;
-  background-color: #222;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-  transition: left 0.3s ease;
-  z-index: 100;
-}
-
-.sidebar.show {
-  left: 0;
-}
-
-.sidebar a {
-  display: block;
-  margin: 10px 0;
-  color: white;
-  text-decoration: none;
-}
-
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 10px 20px;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    .menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .welcome-message {
+      font-size: 20px;
+      flex-grow: 1;
+      text-align: center;
+    }
+    .vip-section {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .vip-box {
+      background-color: #222;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    .earnings-bar {
+      height: 20px;
+      background-color: #333;
+      border-radius: 10px;
+      width: 120px;
+      overflow: hidden;
+    }
+    .earnings-fill {
+      height: 100%;
+      background-color: limegreen;
+      border-radius: 10px;
+      width: 0%;
+      transition: width 1s ease-in-out;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -220px;
+      width: 220px;
+      height: 100%;
+      background-color: #222;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+      transition: left 0.3s ease;
+      z-index: 100;
+    }
+    .sidebar.show {
+      left: 0;
+    }
+    .sidebar a {
+      display: block;
+      margin: 15px 0;
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body onclick="closeSidebar()">
@@ -98,53 +91,45 @@
     <a href="#">Inversiones</a>
     <a href="#">Referidos</a>
     <a href="#">Cerrar sesión</a>
-  </div>  <div class="header">
+  </div>
+  <div class="header">
     <div class="menu-icon" onclick="toggleSidebar(event)">☰</div>
     <div class="welcome-message" id="welcome-message">Bienvenido, Usuario</div>
     <div class="vip-section">
-      <div class="vip-box" id="vip-box">Nivel VIP: VIP1</div>
+      <div class="vip-box" id="vip-box">Nivel VIP: 1</div>
       <div class="earnings-bar">
         <div class="earnings-fill" id="earnings-fill"></div>
       </div>
     </div>
-  </div>  <script>
-    // Simula obtener el nombre del usuario desde el login
-    const username = localStorage.getItem('username') || 'Usuario';
-    document.getElementById("welcome-message").textContent = `Bienvenido, ${username}`;
+  </div>
+  <script>
+    document.getElementById("welcome-message").textContent = `Bienvenido, ${localStorage.getItem('username') || 'Usuario'}`;function toggleSidebar(event) {
+  event.stopPropagation();
+  document.getElementById("sidebar").classList.toggle("show");
+}
 
-    // Sidebar
-    function toggleSidebar(event) {
-      event.stopPropagation();
-      const sidebar = document.getElementById("sidebar");
-      sidebar.classList.toggle("show");
-    }
+function closeSidebar() {
+  document.getElementById("sidebar").classList.remove("show");
+}
 
-    function closeSidebar() {
-      const sidebar = document.getElementById("sidebar");
-      sidebar.classList.remove("show");
-    }
+const recarga = parseInt(localStorage.getItem('recarga')) || 100;
+const vipBox = document.getElementById("vip-box");
+let vipLevel = 1;
+if (recarga >= 1000) vipLevel = 5;
+else if (recarga >= 500) vipLevel = 4;
+else if (recarga >= 300) vipLevel = 3;
+else if (recarga >= 150) vipLevel = 2;
+vipBox.textContent = `Nivel VIP: ${vipLevel}`;
 
-    // Nivel VIP (simulado según monto)
-    const recarga = parseInt(localStorage.getItem('recarga')) || 100; // Monto simulado
-    const vipBox = document.getElementById("vip-box");
+let earnings = 0;
+function updateEarnings() {
+  earnings += Math.random() * 5;
+  document.getElementById("earnings-fill").style.width = `${Math.min((earnings / 100) * 100, 100)}%`;
+}
 
-    let vipLevel = "VIP1";
-    if (recarga >= 1000) vipLevel = "VIP5";
-    else if (recarga >= 500) vipLevel = "VIP4";
-    else if (recarga >= 300) vipLevel = "VIP3";
-    else if (recarga >= 150) vipLevel = "VIP2";
+setInterval(updateEarnings, 60000);
+updateEarnings();
 
-    vipBox.textContent = `Nivel VIP: ${vipLevel}`;
-
-    // Barra de ganancias en tiempo real (simulada)
-    let earnings = 0;
-    function updateEarnings() {
-      earnings += Math.random() * 5; // Simula ganancia
-      const percent = Math.min((earnings / 100) * 100, 100); // % relativo a 100
-      document.getElementById("earnings-fill").style.width = `${percent}%`;
-    }
-
-    setInterval(updateEarnings, 60000); // Cada minuto
-    updateEarnings(); // Inicial
-  </script></body>
+  </script>
+</body>
 </html>
