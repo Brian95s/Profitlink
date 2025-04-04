@@ -1,17 +1,15 @@
-<!DOCTYPE html><html lang="es"><head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ProfitLink - Panel Principal</title>
+  <title>Menú Desplegable</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: linear-gradient(to right, #ff7e5f, #feb47b);
       color: white;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
     .header {
       display: flex;
@@ -19,56 +17,14 @@
       align-items: center;
       background-color: rgba(0, 0, 0, 0.7);
       padding: 10px 20px;
-      width: 100%;
       position: fixed;
       top: 0;
+      width: 100%;
       z-index: 1000;
     }
     .menu-icon {
       font-size: 24px;
       cursor: pointer;
-      z-index: 200;
-      color: white;
-    }
-    .welcome-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-grow: 1;
-      text-align: center;
-    }
-    .vip-section {
-      display: flex;
-      align-items: center;
-    }
-    .vip-box {
-      background-color: #222;
-      padding: 5px 10px;
-      border-radius: 8px;
-      font-size: 14px;
-      margin-left: 10px;
-    }
-    .earnings-bar {
-      height: 20px;
-      background-color: #333;
-      border-radius: 10px;
-      margin-left: 10px;
-      width: 100px;
-      position: relative;
-    }
-    .earnings-fill {
-      height: 100%;
-      background-color: limegreen;
-      border-radius: 10px;
-      width: 0%;
-      transition: width 1s ease-in-out;
-    }
-    .language-selector {
-      margin-left: 15px;
-      color: white;
-      cursor: pointer;
-      position: absolute;
-      right: 20px;
     }
     .sidebar {
       position: fixed;
@@ -78,7 +34,6 @@
       height: 100%;
       background-color: #222;
       padding: 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
       transition: left 0.3s ease;
       z-index: 1500;
     }
@@ -87,84 +42,45 @@
     }
     .sidebar a {
       display: block;
-      margin: 10px 0;
       color: white;
       text-decoration: none;
+      margin: 10px 0;
       padding: 10px;
       border-radius: 5px;
-      transition: background 0.3s;
     }
     .sidebar a:hover {
       background-color: #444;
     }
-    .content {
-      margin-top: 80px;
-      text-align: center;
-      padding: 20px;
-    }
-    .prompt-box {
-      font-size: 12px;
-    }
   </style>
 </head>
 <body>
+  <div class="header">
+    <div class="menu-icon" onclick="toggleSidebar(event)">☰</div>
+    <div>ProfitLink</div>
+  </div>
+
   <div class="sidebar" id="sidebar">
     <a href="#">Perfil</a>
     <a href="#">Depósito</a>
     <a href="#">Retiro</a>
-    <a href="#">Día de pago</a>
-    <a href="#">Calculadora</a>
-    <a href="#">Referidos</a>
-    <a href="#">Términos y condiciones</a>
     <a href="#">Cerrar sesión</a>
-  </div>  
-  <div class="header">
-    <div class="menu-icon" onclick="toggleSidebar(event)">☰</div>
-    <div class="welcome-container">
-      <div class="welcome-message" id="welcome-message">Bienvenido, Usuario</div>
-      <div class="vip-box" id="vip-box">Nivel VIP: 1</div>
-    </div>
-    <div class="language-selector" onclick="changeLanguage()">🌍 Idioma</div>
-  </div>  
-  <div class="content">
-    <div class="description-box" id="description-box">
-      ProfitLink es un sistema de inversión diseñado para conectar a los usuarios con proyectos de distintas empresas y emprendedores. Los inversionistas pueden elegir entre opciones semanales y quincenales, con tasas de retorno del 7% semanal hasta el 20% quincenal.
-    </div>
-    <div class="earnings-bar">
-      <div class="earnings-fill" id="earnings-fill"></div>
-    </div>
-  </div>  
+  </div>
+
   <script>
-    document.getElementById("welcome-message").textContent = `Bienvenido, ${localStorage.getItem('username') || 'Usuario'}`;
     function toggleSidebar(event) {
       event.stopPropagation();
       const sidebar = document.getElementById("sidebar");
       sidebar.classList.toggle("show");
     }
-    function closeSidebar(event) {
+
+    document.addEventListener("click", function(event) {
       const sidebar = document.getElementById("sidebar");
-      if (!event.target.closest(".sidebar") && sidebar.classList.contains("show")) {
+      const isClickInside = sidebar.contains(event.target);
+      const isMenuIcon = event.target.classList.contains("menu-icon");
+      if (!isClickInside && !isMenuIcon) {
         sidebar.classList.remove("show");
       }
-    }
-    document.addEventListener("click", closeSidebar);
-    function changeLanguage() {
-      const lang = prompt("Ingrese el idioma (es, en, pt, zh):", "");
-      if (["es", "en", "pt", "zh"].includes(lang)) {
-        localStorage.setItem("language", lang);
-        alert("Idioma cambiado a " + lang);
-        location.reload();
-      } else {
-        alert("Idioma no válido.");
-      }
-    }
-    function updateEarnings() {
-      let fill = document.getElementById("earnings-fill");
-      let width = parseInt(fill.style.width) || 0;
-      width = (width + 10) % 100;
-      fill.style.width = width + "%";
-    }
-    setInterval(updateEarnings, 60000);
+    });
   </script>
 </body>
 </html>
