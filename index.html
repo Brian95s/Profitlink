@@ -3,67 +3,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Menú Desplegable</title>
+  <title>ProfitLink - Menú Desplegable</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: linear-gradient(to right, #ff7e5f, #feb47b);
       color: white;
+      height: 100vh;
     }
+
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       background-color: rgba(0, 0, 0, 0.7);
-      padding: 10px 20px;
+      padding: 15px 20px;
       position: fixed;
       top: 0;
       width: 100%;
       z-index: 1000;
     }
+
     .menu-icon {
-      font-size: 24px;
+      font-size: 28px;
       cursor: pointer;
+      color: white;
     }
+
     .sidebar {
       position: fixed;
       top: 0;
-      left: -250px;
+      left: -260px;
       width: 250px;
       height: 100%;
       background-color: #222;
       padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
       transition: left 0.3s ease;
       z-index: 1500;
     }
+
     .sidebar.show {
       left: 0;
     }
+
     .sidebar a {
       display: block;
+      margin: 15px 0;
       color: white;
       text-decoration: none;
-      margin: 10px 0;
       padding: 10px;
       border-radius: 5px;
+      transition: background 0.3s;
     }
+
     .sidebar a:hover {
       background-color: #444;
+    }
+
+    .content {
+      padding: 100px 20px 20px;
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="menu-icon" onclick="toggleSidebar(event)">☰</div>
-    <div>ProfitLink</div>
-  </div>
 
   <div class="sidebar" id="sidebar">
     <a href="#">Perfil</a>
     <a href="#">Depósito</a>
     <a href="#">Retiro</a>
+    <a href="#">Calculadora</a>
+    <a href="#">Referidos</a>
     <a href="#">Cerrar sesión</a>
+  </div>
+
+  <div class="header">
+    <div class="menu-icon" onclick="toggleSidebar(event)">☰</div>
+    <div>ProfitLink</div>
+  </div>
+
+  <div class="content">
+    <h1>Bienvenido a ProfitLink</h1>
+    <p>Este es un ejemplo limpio del menú principal funcionando.</p>
   </div>
 
   <script>
@@ -75,12 +97,13 @@
 
     document.addEventListener("click", function(event) {
       const sidebar = document.getElementById("sidebar");
-      const isClickInside = sidebar.contains(event.target);
+      const isInsideSidebar = sidebar.contains(event.target);
       const isMenuIcon = event.target.classList.contains("menu-icon");
-      if (!isClickInside && !isMenuIcon) {
+      if (!isInsideSidebar && !isMenuIcon) {
         sidebar.classList.remove("show");
       }
     });
   </script>
+
 </body>
 </html>
