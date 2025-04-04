@@ -34,8 +34,9 @@
     .welcome-container {
       display: flex;
       align-items: center;
-      flex-grow: 1;
       justify-content: center;
+      flex-grow: 1;
+      text-align: center;
     }
     .vip-section {
       display: flex;
@@ -65,29 +66,42 @@
     }
     .language-selector {
       margin-left: 15px;
+      color: white;
       cursor: pointer;
-      position: relative;
-    }
-    .language-menu {
-      display: none;
       position: absolute;
-      background: white;
-      color: black;
-      border-radius: 5px;
-      padding: 10px;
-      top: 25px;
-      right: 0;
-      box-shadow: 0 0 5px rgba(0,0,0,0.5);
+      right: 20px;
     }
-    .language-menu a {
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #222;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+      transition: left 0.3s ease;
+      z-index: 1500;
+    }
+    .sidebar.show {
+      left: 0;
+    }
+    .sidebar a {
       display: block;
-      padding: 5px;
-      cursor: pointer;
+      margin: 10px 0;
+      color: white;
       text-decoration: none;
-      color: black;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
     }
-    .language-selector:hover .language-menu {
-      display: block;
+    .sidebar a:hover {
+      background-color: #444;
+    }
+    .content {
+      margin-top: 80px;
+      text-align: center;
+      padding: 20px;
     }
   </style>
 </head>
@@ -107,21 +121,14 @@
     <div class="welcome-container">
       <div class="welcome-message" id="welcome-message">Bienvenido, Usuario</div>
       <div class="vip-box" id="vip-box">Nivel VIP: 1</div>
-      <div class="earnings-bar"><div class="earnings-fill" id="earnings-fill"></div></div>
     </div>
-    <div class="language-selector">
-      🌍 Idioma
-      <div class="language-menu">
-        <a onclick="changeLanguage('es')">🇪🇸 Español</a>
-        <a onclick="changeLanguage('en')">🇺🇸 Inglés</a>
-        <a onclick="changeLanguage('pt')">🇵🇹 Portugués</a>
-        <a onclick="changeLanguage('zh')">🇨🇳 Chino</a>
-      </div>
-    </div>
+    <div class="language-selector" onclick="changeLanguage()">🌍 Idioma</div>
   </div>  
   <div class="content">
-    <div class="description-box">
-      ProfitLink es un sistema de inversión diseñado para conectar a los usuarios con proyectos de distintas empresas y emprendedores...
+    <div class="description-box" id="description-box">
+      ProfitLink es un sistema de inversión diseñado para conectar a los usuarios con proyectos de distintas empresas y emprendedores. Los inversionistas pueden elegir entre opciones semanales y quincenales, con tasas de retorno del 7% semanal hasta el 20% quincenal.<br><br>
+      Las operaciones de depósito y retiro se realizan en pesos argentinos o USDT, brindando flexibilidad y seguridad. Además, nuestro sistema de referidos permite generar ingresos adicionales, con la posibilidad de retirar ganancias una vez alcanzado el número mínimo de invitados.<br><br>
+      Invierte con confianza y haz que tu dinero trabaje por ti con ProfitLink.
     </div>
   </div>  
   <script>
@@ -137,29 +144,15 @@ function closeSidebar(event) {
   }
 }
 
-function changeLanguage(lang) {
-  alert(`Cambiando idioma a: ${lang}`);
-  localStorage.setItem('language', lang);
-  location.reload();
+function changeLanguage() {
+  const lang = prompt("Ingrese el idioma (es, en, pt, zh):");
+  if (['es', 'en', 'pt', 'zh'].includes(lang)) {
+    localStorage.setItem('language', lang);
+    location.reload();
+  } else {
+    alert("Idioma no válido.");
+  }
 }
-
-const recarga = parseInt(localStorage.getItem('recarga')) || 100;
-const vipBox = document.getElementById("vip-box");
-let vipLevel = 1;
-if (recarga >= 1000) vipLevel = 5;
-else if (recarga >= 500) vipLevel = 4;
-else if (recarga >= 300) vipLevel = 3;
-else if (recarga >= 150) vipLevel = 2;
-vipBox.textContent = `Nivel VIP: ${vipLevel}`;
-
-let earnings = 0;
-function updateEarnings() {
-  earnings += Math.random() * 5;
-  document.getElementById("earnings-fill").style.width = `${Math.min((earnings / 100) * 100, 100)}%`;
-}
-
-setInterval(updateEarnings, 60000);
-updateEarnings();
 
 document.body.addEventListener("click", closeSidebar);
 
