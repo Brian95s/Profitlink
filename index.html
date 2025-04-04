@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -13,105 +12,74 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-    }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 10px 20px;
-      position: relative;
-    }
+      text-align: center;
+    }.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  width: 100%;
+}
 
-    .menu-icon {
-      font-size: 24px;
-      cursor: pointer;
-      z-index: 200;
-    }
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 200;
+}
 
-    .welcome-container {
-      display: flex;
-      align-items: center;
-      flex-grow: 1;
-      justify-content: center;
-    }
+.welcome-container {
+  flex-grow: 1;
+  text-align: center;
+}
 
-    .vip-section {
-      display: flex;
-      align-items: center;
-    }
+.welcome-message {
+  font-size: 24px;
+  font-weight: bold;
+}
 
-    .vip-box {
-      background-color: #222;
-      padding: 5px 10px;
-      border-radius: 8px;
-      font-size: 14px;
-      margin-left: 10px;
-    }
+.description {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 80%;
+  margin-top: 20px;
+}
 
-    .earnings-bar {
-      height: 20px;
-      background-color: #333;
-      border-radius: 10px;
-      margin-left: 10px;
-      width: 100px;
-      position: relative;
-    }
+.vip-section {
+  display: flex;
+  align-items: center;
+}
 
-    .earnings-fill {
-      height: 100%;
-      background-color: limegreen;
-      border-radius: 10px;
-      width: 0%;
-      transition: width 1s ease-in-out;
-    }
+.vip-box {
+  background-color: #222;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-left: 10px;
+}
 
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background-color: #222;
-      padding: 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-      transition: left 0.3s ease;
-      z-index: 150;
-    }
+.earnings-bar {
+  height: 20px;
+  background-color: #333;
+  border-radius: 10px;
+  margin-left: 10px;
+  width: 100px;
+  position: relative;
+}
 
-    .sidebar.show {
-      left: 0;
-    }
-
-    .sidebar a {
-      display: block;
-      margin: 10px 0;
-      color: white;
-      text-decoration: none;
-      padding: 10px;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-
-    .sidebar a:hover {
-      background-color: #444;
-    }
+.earnings-fill {
+  height: 100%;
+  background-color: limegreen;
+  border-radius: 10px;
+  width: 0%;
+  transition: width 1s ease-in-out;
+}
 
   </style>
 </head>
-<body onclick="closeSidebar(event)">
-  <div class="sidebar" id="sidebar">
-    <a href="#">Perfil</a>
-    <a href="#">Depósito</a>
-    <a href="#">Retiro</a>
-    <a href="#">Día de pago</a>
-    <a href="#">Calculadora</a>
-    <a href="#">Referidos</a>
-    <a href="#">Términos y condiciones</a>
-    <a href="#">Cerrar sesión</a>
-  </div>
-
+<body>
   <div class="header">
     <div class="menu-icon" onclick="toggleSidebar(event)">☰</div>
     <div class="welcome-container">
@@ -123,21 +91,16 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <script>
+  </div>  <div class="description">
+    <p>ProfitLink es un sistema de inversión diseñado para conectar a los usuarios con proyectos de distintas empresas y emprendedores. Los inversionistas pueden elegir entre opciones semanales y quincenales, con tasas de retorno del 7% semanal hasta el 20% quincenal.</p>
+    <p>Las operaciones de depósito y retiro se realizan en pesos argentinos o USDT, brindando flexibilidad y seguridad. Además, nuestro sistema de referidos permite generar ingresos adicionales, con la posibilidad de retirar ganancias una vez alcanzado el número mínimo de invitados.</p>
+    <p>Invierte con confianza y haz que tu dinero trabaje por ti con ProfitLink.</p>
+  </div>  <script>
     document.getElementById("welcome-message").textContent = `Bienvenido, ${localStorage.getItem('username') || 'Usuario'}`;
 
     function toggleSidebar(event) {
       event.stopPropagation();
       document.getElementById("sidebar").classList.toggle("show");
-    }
-
-    function closeSidebar(event) {
-      const sidebar = document.getElementById("sidebar");
-      if (!event.target.closest(".sidebar") && sidebar.classList.contains("show")) {
-        sidebar.classList.remove("show");
-      }
     }
 
     const recarga = parseInt(localStorage.getItem('recarga')) || 100;
@@ -157,6 +120,5 @@
 
     setInterval(updateEarnings, 60000);
     updateEarnings();
-  </script>
-</body>
+  </script></body>
 </html>
