@@ -103,6 +103,9 @@
       text-align: center;
       padding: 20px;
     }
+    .prompt-box {
+      font-size: 12px;
+    }
   </style>
 </head>
 <body>
@@ -126,36 +129,42 @@
   </div>  
   <div class="content">
     <div class="description-box" id="description-box">
-      ProfitLink es un sistema de inversión diseñado para conectar a los usuarios con proyectos de distintas empresas y emprendedores. Los inversionistas pueden elegir entre opciones semanales y quincenales, con tasas de retorno del 7% semanal hasta el 20% quincenal.<br><br>
-      Las operaciones de depósito y retiro se realizan en pesos argentinos o USDT, brindando flexibilidad y seguridad. Además, nuestro sistema de referidos permite generar ingresos adicionales, con la posibilidad de retirar ganancias una vez alcanzado el número mínimo de invitados.<br><br>
-      Invierte con confianza y haz que tu dinero trabaje por ti con ProfitLink.
+      ProfitLink es un sistema de inversión diseñado para conectar a los usuarios con proyectos de distintas empresas y emprendedores. Los inversionistas pueden elegir entre opciones semanales y quincenales, con tasas de retorno del 7% semanal hasta el 20% quincenal.
+    </div>
+    <div class="earnings-bar">
+      <div class="earnings-fill" id="earnings-fill"></div>
     </div>
   </div>  
   <script>
-    document.getElementById("welcome-message").textContent = `Bienvenido, ${localStorage.getItem('username') || 'Usuario'}`;function toggleSidebar(event) {
-  event.stopPropagation();
-  document.getElementById("sidebar").classList.toggle("show");
-}
-
-function closeSidebar(event) {
-  const sidebar = document.getElementById("sidebar");
-  if (!event.target.closest(".sidebar") && sidebar.classList.contains("show")) {
-    sidebar.classList.remove("show");
-  }
-}
-
-function changeLanguage() {
-  const lang = prompt("Ingrese el idioma (es, en, pt, zh):");
-  if (['es', 'en', 'pt', 'zh'].includes(lang)) {
-    localStorage.setItem('language', lang);
-    location.reload();
-  } else {
-    alert("Idioma no válido.");
-  }
-}
-
-document.body.addEventListener("click", closeSidebar);
-
+    document.getElementById("welcome-message").textContent = `Bienvenido, ${localStorage.getItem('username') || 'Usuario'}`;
+    function toggleSidebar(event) {
+      event.stopPropagation();
+      document.getElementById("sidebar").classList.toggle("show");
+    }
+    function closeSidebar(event) {
+      const sidebar = document.getElementById("sidebar");
+      if (!event.target.closest(".sidebar") && sidebar.classList.contains("show")) {
+        sidebar.classList.remove("show");
+      }
+    }
+    function changeLanguage() {
+      const lang = prompt("Ingrese el idioma (es, en, pt, zh):", "");
+      if (['es', 'en', 'pt', 'zh'].includes(lang)) {
+        localStorage.setItem('language', lang);
+        alert("Idioma cambiado a " + lang);
+        location.reload();
+      } else {
+        alert("Idioma no válido.");
+      }
+    }
+    document.body.addEventListener("click", closeSidebar);
+    function updateEarnings() {
+      let fill = document.getElementById("earnings-fill");
+      let width = parseInt(fill.style.width) || 0;
+      width = (width + 10) % 100;
+      fill.style.width = width + "%";
+    }
+    setInterval(updateEarnings, 60000);
   </script>
 </body>
 </html>
