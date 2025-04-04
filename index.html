@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="es">
-<head>
-  <meta charset="UTF-8" />
+<!DOCTYPE html><html lang="es"><head>  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ProfitLink - Menú Desplegable</title>
   <style>
@@ -30,12 +28,10 @@
     .user-info {
       display: flex;
       align-items: center;
-      gap: 10px;
-    }
-    .welcome-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      gap: 15px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
     .vip-level {
       background-color: gold;
@@ -78,6 +74,7 @@
     .welcome-message {
       display: block;
       text-align: center;
+      margin-left: 20px;
     }
   </style>
 </head>
@@ -92,7 +89,7 @@
   </div>
   <div class="header">
     <div class="menu-icon" onclick="toggleSidebar(event)">☰</div>
-    <div class="welcome-container">
+    <div class="user-info">
       <span id="welcome-message">Bienvenido usuario: Cargando...</span>
       <span class="vip-level" id="vip-level">VIP 1</span>
     </div>
@@ -106,22 +103,21 @@
       event.stopPropagation();
       const sidebar = document.getElementById("sidebar");
       sidebar.classList.toggle("show");
-    }document.addEventListener("click", function(event) {
-  const sidebar = document.getElementById("sidebar");
-  const isInsideSidebar = sidebar.contains(event.target);
-  const isMenuIcon = event.target.classList.contains("menu-icon");
-  if (!isInsideSidebar && !isMenuIcon) {
-    sidebar.classList.remove("show");
-  }
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-  const user = "UsuarioDemo";
-  const vipLevel = "VIP 3";
-  document.getElementById("welcome-message").textContent = `Bienvenido usuario: ${user}`;
-  document.getElementById("vip-level").textContent = vipLevel;
-});
-
+    }
+    document.addEventListener("click", function(event) {
+      const sidebar = document.getElementById("sidebar");
+      const isInsideSidebar = sidebar.contains(event.target);
+      const isMenuIcon = event.target.classList.contains("menu-icon");
+      if (!isInsideSidebar && !isMenuIcon) {
+        sidebar.classList.remove("show");
+      }
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+      const user = "UsuarioDemo";
+      const vipLevel = "VIP 3";
+      document.getElementById("welcome-message").textContent = `Bienvenido usuario: ${user}`;
+      document.getElementById("vip-level").textContent = vipLevel;
+    });
   </script>
 </body>
 </html>
