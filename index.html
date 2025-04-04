@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -12,89 +13,104 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-    }.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 10px 20px;
-}
+    }
 
-.menu-icon {
-  font-size: 24px;
-  cursor: pointer;
-}
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 10px 20px;
+      position: relative;
+    }
 
-.welcome-container {
-  display: flex;
-  align-items: center;
-  flex-grow: 1;
-  justify-content: center;
-}
+    .menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
 
-.vip-section {
-  display: flex;
-  align-items: center;
-}
+    .welcome-container {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+      justify-content: center;
+    }
 
-.vip-box {
-  background-color: #222;
-  padding: 5px 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  margin-left: 10px;
-}
+    .vip-section {
+      display: flex;
+      align-items: center;
+    }
 
-.earnings-bar {
-  height: 20px;
-  background-color: #333;
-  border-radius: 10px;
-  margin-left: 10px;
-  width: 100px;
-  position: relative;
-}
+    .vip-box {
+      background-color: #222;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-left: 10px;
+    }
 
-.earnings-fill {
-  height: 100%;
-  background-color: limegreen;
-  border-radius: 10px;
-  width: 0%;
-  transition: width 1s ease-in-out;
-}
+    .earnings-bar {
+      height: 20px;
+      background-color: #333;
+      border-radius: 10px;
+      margin-left: 10px;
+      width: 100px;
+      position: relative;
+    }
 
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: -200px;
-  width: 200px;
-  height: 100%;
-  background-color: #222;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-  transition: left 0.3s ease;
-  z-index: 100;
-}
+    .earnings-fill {
+      height: 100%;
+      background-color: limegreen;
+      border-radius: 10px;
+      width: 0%;
+      transition: width 1s ease-in-out;
+    }
 
-.sidebar.show {
-  left: 0;
-}
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -200px;
+      width: 200px;
+      height: 100%;
+      background-color: #222;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+      transition: left 0.3s ease;
+      z-index: 100;
+    }
 
-.sidebar a {
-  display: block;
-  margin: 10px 0;
-  color: white;
-  text-decoration: none;
-}
+    .sidebar.show {
+      left: 0;
+    }
+
+    .sidebar a {
+      display: block;
+      margin: 10px 0;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+    }
 
   </style>
 </head>
-<body onclick="closeSidebar()">
+<body onclick="closeSidebar(event)">
   <div class="sidebar" id="sidebar">
     <a href="#">Perfil</a>
-    <a href="#">Inversiones</a>
+    <a href="#">Depósito</a>
+    <a href="#">Retiro</a>
+    <a href="#">Día de pago</a>
+    <a href="#">Calculadora</a>
     <a href="#">Referidos</a>
+    <a href="#">Términos y condiciones</a>
     <a href="#">Cerrar sesión</a>
   </div>
+
   <div class="header">
     <div class="menu-icon" onclick="toggleSidebar(event)">☰</div>
     <div class="welcome-container">
@@ -107,34 +123,39 @@
       </div>
     </div>
   </div>
+
   <script>
-    document.getElementById("welcome-message").textContent = `Bienvenido, ${localStorage.getItem('username') || 'Usuario'}`;function toggleSidebar(event) {
-  event.stopPropagation();
-  document.getElementById("sidebar").classList.toggle("show");
-}
+    document.getElementById("welcome-message").textContent = `Bienvenido, ${localStorage.getItem('username') || 'Usuario'}`;
 
-function closeSidebar() {
-  document.getElementById("sidebar").classList.remove("show");
-}
+    function toggleSidebar(event) {
+      event.stopPropagation();
+      document.getElementById("sidebar").classList.toggle("show");
+    }
 
-const recarga = parseInt(localStorage.getItem('recarga')) || 100;
-const vipBox = document.getElementById("vip-box");
-let vipLevel = 1;
-if (recarga >= 1000) vipLevel = 5;
-else if (recarga >= 500) vipLevel = 4;
-else if (recarga >= 300) vipLevel = 3;
-else if (recarga >= 150) vipLevel = 2;
-vipBox.textContent = `Nivel VIP: ${vipLevel}`;
+    function closeSidebar(event) {
+      const sidebar = document.getElementById("sidebar");
+      if (!event.target.closest(".sidebar") && sidebar.classList.contains("show")) {
+        sidebar.classList.remove("show");
+      }
+    }
 
-let earnings = 0;
-function updateEarnings() {
-  earnings += Math.random() * 5;
-  document.getElementById("earnings-fill").style.width = `${Math.min((earnings / 100) * 100, 100)}%`;
-}
+    const recarga = parseInt(localStorage.getItem('recarga')) || 100;
+    const vipBox = document.getElementById("vip-box");
+    let vipLevel = 1;
+    if (recarga >= 1000) vipLevel = 5;
+    else if (recarga >= 500) vipLevel = 4;
+    else if (recarga >= 300) vipLevel = 3;
+    else if (recarga >= 150) vipLevel = 2;
+    vipBox.textContent = `Nivel VIP: ${vipLevel}`;
 
-setInterval(updateEarnings, 60000);
-updateEarnings();
+    let earnings = 0;
+    function updateEarnings() {
+      earnings += Math.random() * 5;
+      document.getElementById("earnings-fill").style.width = `${Math.min((earnings / 100) * 100, 100)}%`;
+    }
 
+    setInterval(updateEarnings, 60000);
+    updateEarnings();
   </script>
 </body>
-      </html>
+</html>
