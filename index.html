@@ -12,19 +12,24 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
+      align-items: center;
     }.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 10px 20px;
-  position: relative;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
 }
 
 .menu-icon {
   font-size: 24px;
   cursor: pointer;
   z-index: 200;
+  color: white;
 }
 
 .welcome-container {
@@ -32,15 +37,11 @@
   align-items: center;
   flex-grow: 1;
   justify-content: center;
-  flex-direction: column;
-  text-align: center;
 }
 
 .vip-section {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-top: 10px;
 }
 
 .vip-box {
@@ -78,7 +79,7 @@
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0,0,0,0.5);
   transition: left 0.3s ease;
-  z-index: 999;
+  z-index: 1500;
 }
 
 .sidebar.show {
@@ -99,14 +100,21 @@
   background-color: #444;
 }
 
+.content {
+  margin-top: 60px;
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+}
+
 .description-box {
   background-color: rgba(255, 255, 255, 0.2);
-  padding: 15px;
+  padding: 20px;
   border-radius: 10px;
-  width: 80%;
-  max-width: 600px;
-  margin: 20px auto;
-  text-align: center;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px black;
 }
 
   </style>
@@ -125,17 +133,19 @@
     <div class="menu-icon" onclick="toggleSidebar(event)">☰</div>
     <div class="welcome-container">
       <div class="welcome-message" id="welcome-message">Bienvenido, Usuario</div>
-      <div class="vip-section">
-        <div class="vip-box" id="vip-box">Nivel VIP: 1</div>
-        <div class="earnings-bar">
-          <div class="earnings-fill" id="earnings-fill"></div>
-        </div>
+    </div>
+    <div class="vip-section">
+      <div class="vip-box" id="vip-box">Nivel VIP: 1</div>
+      <div class="earnings-bar">
+        <div class="earnings-fill" id="earnings-fill"></div>
       </div>
     </div>
-  </div>  <div class="description-box">
-    ProfitLink es un sistema de inversión diseñado para conectar a los usuarios con proyectos de distintas empresas y emprendedores. Los inversionistas pueden elegir entre opciones semanales y quincenales, con tasas de retorno del 7% semanal hasta el 20% quincenal.<br><br>
-    Las operaciones de depósito y retiro se realizan en pesos argentinos o USDT, brindando flexibilidad y seguridad. Además, nuestro sistema de referidos permite generar ingresos adicionales, con la posibilidad de retirar ganancias una vez alcanzado el número mínimo de invitados.<br><br>
-    Invierte con confianza y haz que tu dinero trabaje por ti con ProfitLink.
+  </div>  <div class="content">
+    <div class="description-box">
+      ProfitLink es un sistema de inversión diseñado para conectar a los usuarios con proyectos de distintas empresas y emprendedores. Los inversionistas pueden elegir entre opciones semanales y quincenales, con tasas de retorno del 7% semanal hasta el 20% quincenal.<br><br>
+      Las operaciones de depósito y retiro se realizan en pesos argentinos o USDT, brindando flexibilidad y seguridad. Además, nuestro sistema de referidos permite generar ingresos adicionales, con la posibilidad de retirar ganancias una vez alcanzado el número mínimo de invitados.<br><br>
+      Invierte con confianza y haz que tu dinero trabaje por ti con ProfitLink.
+    </div>
   </div>  <script>
     document.getElementById("welcome-message").textContent = `Bienvenido, ${localStorage.getItem('username') || 'Usuario'}`;
 
