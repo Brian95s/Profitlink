@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ProfitLink - Menú Arreglado</title>
+  <title>ProfitLink - Con Menú</title>
   <style>
     body {
       margin: 0;
@@ -18,7 +18,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('https://raw.githubusercontent.com/Brian95s/Profitlink/main/assets/images/logo.png');
+  background-image: url('https://raw.githubusercontent.com/Brian95s/Profitlink/refs/heads/main/assets/images/file_000000001a1851f6ab7998f00d3f9709_conversation_id%3D67f03402-456c-8005-b1ea-3e3f4af874d3%26message_id%3D21312bb7-8f4e-438f-88d3-a72cf1d6fcab.PNG');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -27,21 +27,28 @@
   pointer-events: none;
 }
 
-.header {
+.header, .sub-header {
   display: flex;
   align-items: center;
-  justify-content: center;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 15px 20px;
   position: fixed;
-  top: 0;
   width: 100%;
   z-index: 1000;
 }
 
+.header {
+  top: 0;
+  justify-content: center;
+}
+
+.sub-header {
+  top: 50px;
+  justify-content: flex-start;
+}
+
 .menu-toggle {
-  position: absolute;
-  left: 20px; /* Ubicación corregida */
+  margin-left: 30px; /* Ajuste para moverlo un poco a la derecha */
   font-size: 20px;
   color: white;
   cursor: pointer;
@@ -80,9 +87,7 @@
 }
 
 .sidebar a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: block;
   margin: 15px 0;
   color: white;
   text-decoration: none;
@@ -96,7 +101,7 @@
 }
 
 .content {
-  padding: 100px 20px 20px;
+  padding: 120px 20px 20px; /* Ajuste para dejar espacio a la nueva barra */
   text-align: center;
   z-index: 1001;
   position: relative;
@@ -111,18 +116,19 @@
 </head>
 <body>
   <div class="background-logo"></div>  <div class="sidebar" id="sidebar">
-    <a href="#">🔹 Perfil</a>
-    <a href="#">💰 Depósito</a>
-    <a href="#">🏧 Retiro</a>
-    <a href="#">📊 Calculadora</a>
-    <a href="#">👥 Referidos</a>
-    <a href="#">🚪 Cerrar sesión</a>
+    <a href="#">Perfil</a>
+    <a href="#">Depósito</a>
+    <a href="#">Retiro</a>
+    <a href="#">Calculadora</a>
+    <a href="#">Referidos</a>
+    <a href="#">Cerrar sesión</a>
   </div>  <div class="header">
-    <div class="menu-toggle" id="menu-toggle">☰ Menú</div>
     <div class="user-info">
       <span id="welcome-message">Bienvenido usuario: Cargando...</span>
       <span class="vip-level" id="vip-level">VIP 1</span>
     </div>
+  </div>  <div class="sub-header">
+    <div class="menu-toggle" id="menu-toggle">☰ Menú</div>
   </div>  <div class="content">
     <h1 class="welcome-message">Bienvenido a ProfitLink</h1>
     <p>Este es un ejemplo limpio del menú principal funcionando.</p>
@@ -139,7 +145,6 @@
       menuToggle.addEventListener("click", function (event) {
         event.stopPropagation();
         sidebar.classList.toggle("show");
-        console.log("Menú desplegado: ", sidebar.classList.contains("show")); // Para depuración
       });
 
       document.addEventListener("click", function (event) {
