@@ -1,216 +1,151 @@
 <!DOCTYPE html><html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ProfitLink</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(to right, #ff7e5f, #feb47b);
-        color: white;
-        height: 100vh;
-        position: relative;
-        overflow-x: hidden;
-      }
-      .login-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-      .login-box {
-        background: rgba(0, 0, 0, 0.7);
-        padding: 30px;
-        border-radius: 10px;
-      }
-      input, button {
-        display: block;
-        margin: 10px auto;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-      }
-      button {
-        background-color: #28a745;
-        color: white;
-        cursor: pointer;
-      }
-      .hidden {
-        display: none;
-      }
-      .background-logo {
-        position: fixed;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60%;
-        height: auto;
-        opacity: 0.2;
-        background-image: url('https://raw.githubusercontent.com/Brian95s/Profitlink/main/assets/images/logo.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        z-index: 1;
-        pointer-events: none;
-      }
-      .header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 10px 20px;
-        position: fixed;
-        width: 100%;
-        z-index: 1000;
-        top: 0;
-      }
-      .user-info {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-      }
-      .vip-level {
-        background-color: gold;
-        color: black;
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-weight: bold;
-      }
-      .menu-toggle {
-        font-size: 18px;
-        color: white;
-        cursor: pointer;
-        margin-top: 10px;
-        padding: 5px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 5px;
-      }
-      .sidebar {
-        position: fixed;
-        top: 60px;
-        left: -260px;
-        width: 250px;
-        height: calc(100% - 60px);
-        background-color: #222;
-        padding: 20px;
-        box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-        transition: left 0.3s ease;
-        z-index: 1500;
-      }
-      .sidebar.show {
-        left: 0;
-      }
-      .sidebar a {
-        display: block;
-        margin: 15px 0;
-        color: white;
-        text-decoration: none;
-        padding: 10px;
-        border-radius: 5px;
-        transition: background 0.3s;
-      }
-      .sidebar a:hover {
-        background-color: #444;
-      }
-      .top-description {
-        margin-top: 70px;
-        padding: 20px 30px;
-        text-align: center;
-        background-color: rgba(0,0,0,0.4);
-        border-radius: 10px;
-        width: 80%;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-        z-index: 20;
-        position: relative;
-      }
-      .content {
-        padding: 320px 20px 20px;
-        text-align: center;
-        position: relative;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="login" class="login-container">
-      <div class="login-box">
-        <h2>Iniciar Sesión</h2>
-        <input type="text" id="username" placeholder="Usuario" />
-        <input type="password" id="password" placeholder="Contraseña" />
-        <button onclick="login()">Ingresar</button>
-        <p id="login-error" style="color: red;"></p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ProfitLink - Plataforma de Inversión</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background: linear-gradient(to right, #ff7e5f, #feb47b);
+      color: white;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }.container, .dashboard {
+  background-color: rgba(0, 0, 0, 0.85);
+  padding: 30px 25px;
+  border-radius: 15px;
+  text-align: center;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+}
+
+.dashboard { display: none; }
+
+input, button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+button {
+  background-color: #ff7e5f;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover { background-color: #feb47b; }
+.language-selector, a { background-color: #2c2c2c; color: white; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: -260px;
+  width: 250px;
+  height: calc(100% - 60px);
+  background-color: #222;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+  transition: left 0.3s ease;
+}
+.sidebar.show { left: 0; }
+.sidebar a { display: block; color: white; text-decoration: none; padding: 10px; }
+
+  </style>
+</head>
+<body>
+  <div class="container" id="login-container">
+    <select class="language-selector" onchange="changeLanguage(this.value)">
+      <option value="es">🇪🇸 Español</option>
+      <option value="en">🇺🇸 English</option>
+      <option value="pt">🇵🇹 Português</option>
+      <option value="zh">🇨🇳 中文</option>
+    </select>
+    <h2 id="form-title">Iniciar Sesión</h2>
+    <input type="text" id="username" placeholder="Nombre de usuario" />
+    <input type="email" id="email" placeholder="Correo electrónico" style="display: none;" />
+    <input type="password" id="password" placeholder="Contraseña" required />
+    <p class="error-message" id="error-message"></p>
+    <button onclick="authenticate()" id="auth-button">Iniciar Sesión</button>
+    <p><a href="#" onclick="toggleForm()" id="toggle-link">¿No tienes cuenta? Regístrate</a></p>
+    <p><a href="#" onclick="showRecovery()" id="forgot-link">¿Olvidaste tu contraseña?</a></p>
+  </div>  <div class="dashboard" id="dashboard">
+    <div class="header">
+      <div class="user-info">
+        <span id="welcome-message">Bienvenido usuario: Cargando...</span>
+        <span class="vip-level" id="vip-level">VIP 1</span>
       </div>
-    </div><div id="main" class="hidden">
-  <div class="header">
-    <div class="user-info">
-      <span id="welcome-message">Bienvenido usuario: Cargando...</span>
-      <span class="vip-level" id="vip-level">VIP 1</span>
+      <div class="menu-toggle" id="menu-toggle">☰ Menú</div>
     </div>
-    <div class="menu-toggle" id="menu-toggle">☰ Menú</div>
-  </div>
-  <div class="top-description">
-    <h2>Bienvenido a ProfitLink</h2>
-    <p>Se trata de una plataforma de inversión que genera rendimientos semanales, quincenales y mensuales.</p>
-    <p><strong>7% semanal</strong></p>
-    <p><strong>20% quincenal</strong></p>
-    <p><strong>45% mensual</strong></p>
-    <p>ProfitLink se dedica a ayudar a emprendimientos y empresas, obteniendo estos rendimientos de manera sostenible.</p>
-    <p>Además, contamos con un <strong>programa de referidos</strong>, donde podrás ganar un porcentaje por cada referido o retirar dinero directamente a tu cuenta.</p>
-    <p><strong>Métodos de depósito y retiro:</strong> Aceptamos ARS (pesos argentinos) y USDT.</p>
-    <p><strong>¡Gracias por confiar en ProfitLink!</strong></p>
-  </div>
-  <div class="background-logo"></div>
-  <div class="sidebar" id="sidebar">
-    <a href="#">Perfil</a>
-    <a href="#">Depósito</a>
-    <a href="#">Retiro</a>
-    <a href="#">Calculadora</a>
-    <a href="#">Referidos</a>
-    <a href="#">Cerrar sesión</a>
-  </div>
-  <div class="content">
-    <h1 class="welcome-message">Plataforma de inversión activa</h1>
-  </div>
-</div>
-
-<script>
-  function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    const errorMsg = document.getElementById("login-error");
-
-    if (username === "Brian95s" && password === "Demian31") {
-      document.getElementById("login").classList.add("hidden");
-      document.getElementById("main").classList.remove("hidden");
-
-      document.getElementById("welcome-message").textContent = `Bienvenido usuario: ${username}`;
-      document.getElementById("vip-level").textContent = "VIP 3";
-    } else {
-      errorMsg.textContent = "Usuario o contraseña incorrectos";
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const menuToggle = document.getElementById("menu-toggle");
-    const sidebar = document.getElementById("sidebar");
-
-    if (menuToggle) {
-      menuToggle.addEventListener("click", function (event) {
-        event.stopPropagation();
-        sidebar.classList.toggle("show");
-      });
+    <div class="sidebar" id="sidebar">
+      <a href="#">Perfil</a>
+      <a href="#">Depósito</a>
+      <a href="#">Retiro</a>
+      <a href="#">Calculadora</a>
+      <a href="#">Referidos</a>
+      <a href="#">Cerrar sesión</a>
+    </div>
+  </div>  <script>
+    function authenticate() {
+      document.getElementById("login-container").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("welcome-message").innerText = "Bienvenido usuario: UsuarioEjemplo";
     }
 
-    document.addEventListener("click", function (event) {
-      if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
-        sidebar.classList.remove("show");
+    function toggleForm() {
+      let emailField = document.getElementById("email");
+      let authButton = document.getElementById("auth-button");
+      let toggleLink = document.getElementById("toggle-link");
+
+      if (emailField.style.display === "none") {
+        emailField.style.display = "block";
+        authButton.innerText = "Registrarse";
+        toggleLink.innerText = "¿Ya tienes cuenta? Inicia sesión";
+      } else {
+        emailField.style.display = "none";
+        authButton.innerText = "Iniciar Sesión";
+        toggleLink.innerText = "¿No tienes cuenta? Regístrate";
       }
-    });
-  });
-</script>
+    }
 
-  </body>
+    function changeLanguage(lang) {
+      const translations = {
+        es: { title: "Iniciar Sesión", button: "Iniciar Sesión" },
+        en: { title: "Login", button: "Login" },
+        pt: { title: "Entrar", button: "Entrar" },
+        zh: { title: "登录", button: "登录" }
+      };
+      document.getElementById("form-title").innerText = translations[lang].title;
+      document.getElementById("auth-button").innerText = translations[lang].button;
+    }
+
+    document.getElementById("menu-toggle").addEventListener("click", function () {
+      document.getElementById("sidebar").classList.toggle("show");
+    });
+  </script></body>
 </html>
