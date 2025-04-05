@@ -5,6 +5,7 @@
   <title>ProfitLink - Plataforma de Inversión</title>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <link rel="stylesheet" href="styles.css" />
   <style>
     body {
       margin: 0;
@@ -13,195 +14,302 @@
       color: white;
       height: 100vh;
       overflow-x: hidden;
-      position: relative;
-    }
-    .container {
-      background-color: rgba(0, 0, 0, 0.85);
-      padding: 30px 25px;
-      border-radius: 15px;
-      text-align: center;
-      width: 100%;
-      max-width: 360px;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
-      margin: auto;
-      position: relative;
-      top: 50%;
-      transform: translateY(-50%);
-    }
+    }/* LOGIN */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-    input {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      background-color: #2c2c2c;
-      color: white;
-      font-size: 14px;
-    }
+.login-box {
+  background-color: rgba(0, 0, 0, 0.85);
+  padding: 30px 25px;
+  border-radius: 15px;
+  text-align: center;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+}
 
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      background-color: #ff7e5f;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  background-color: #2c2c2c;
+  color: white;
+  font-size: 14px;
+}
 
-    button:hover {
-      background-color: #feb47b;
-    }
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background-color: #ff7e5f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-    .language-selector {
-      margin-bottom: 15px;
-      padding: 8px;
-      border-radius: 6px;
-      border: none;
-      background-color: #2c2c2c;
-      color: white;
-      font-size: 14px;
-    }
+button:hover {
+  background-color: #feb47b;
+}
 
-    a {
-      color: #ffb98a;
-      text-decoration: none;
-      font-size: 14px;
-    }
+.language-selector {
+  margin-bottom: 15px;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  background-color: #2c2c2c;
+  color: white;
+  font-size: 14px;
+}
 
-    a:hover {
-      text-decoration: underline;
-    }
+a {
+  color: #ffb98a;
+  text-decoration: none;
+  font-size: 14px;
+}
 
-    .dashboard {
-      display: none;
-    }
+a:hover {
+  text-decoration: underline;
+}
 
-    .background-logo {
-      position: fixed;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: auto;
-      opacity: 0.2;
-      background-image: url('https://raw.githubusercontent.com/Brian95s/Profitlink/main/assets/images/logo.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      z-index: 1;
-      pointer-events: none;
-    }
+/* DASHBOARD */
+.header, .sidebar, .top-description, .background-logo, .content {
+  display: none;
+}
 
-    .header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 10px 20px;
-      width: 100%;
-      z-index: 1000;
-      position: fixed;
-      top: 0;
-    }
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  top: 0;
+}
 
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 
-    .vip-level {
-      background-color: gold;
-      color: black;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-weight: bold;
-    }
+.vip-level {
+  background-color: gold;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
 
-    .menu-toggle {
-      font-size: 18px;
-      color: white;
-      cursor: pointer;
-      margin-top: 10px;
-      padding: 5px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 5px;
-    }
+.menu-toggle {
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
 
-    .sidebar {
-      position: fixed;
-      top: 60px;
-      left: -260px;
-      width: 250px;
-      height: calc(100% - 60px);
-      background-color: #222;
-      padding: 20px;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
-      transition: left 0.3s ease;
-      z-index: 1500;
-    }
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: -260px;
+  width: 250px;
+  height: calc(100% - 60px);
+  background-color: #222;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+  transition: left 0.3s ease;
+  z-index: 1500;
+}
 
-    .sidebar.show {
-      left: 0;
-    }
+.sidebar.show {
+  left: 0;
+}
 
-    .sidebar a {
-      display: block;
-      margin: 15px 0;
-      color: white;
-      text-decoration: none;
-      padding: 10px;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
+.sidebar a {
+  display: block;
+  margin: 15px 0;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
 
-    .sidebar a:hover {
-      background-color: #444;
-    }
+.sidebar a:hover {
+  background-color: #444;
+}
+
+.top-description {
+  margin-top: 70px;
+  padding: 20px 30px;
+  text-align: center;
+  background-color: rgba(0,0,0,0.4);
+  border-radius: 10px;
+  width: 80%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 20;
+  position: relative;
+}
+
+.background-logo {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: auto;
+  opacity: 0.2;
+  background-image: url('https://raw.githubusercontent.com/Brian95s/Profitlink/main/assets/images/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.content {
+  padding: 320px 20px 20px;
+  text-align: center;
+  position: relative;
+}
+
   </style>
 </head>
 <body>
-  <div class="background-logo"></div>
-  <div class="header">
-    <div class="user-info">
-      <span>Bienvenido a ProfitLink</span>
-      <span class="vip-level">VIP 1</span>
-    </div>
-    <div class="menu-toggle" onclick="toggleSidebar()">☰ Menú</div>
+  <!-- LOGIN -->
+  <div class="container" id="login-container">
+    <div class="login-box">
+      <select class="language-selector" onchange="changeLanguage(this.value)">
+        <option value="es">Español</option>
+        <option value="en">English</option>
+        <option value="pt">Português</option>
+        <option value="zh">中文</option>
+      </select><h2 id="form-title">Iniciar Sesión</h2>
+  <input type="text" id="username" placeholder="Nombre de usuario" />
+  <input type="email" id="email" placeholder="Correo electrónico" style="display: none;" />
+  <input type="password" id="password" placeholder="Contraseña" required />
+  <p class="error-message" id="error-message"></p>
+  <button onclick="authenticate()" id="auth-button">Iniciar Sesión</button>
+  <button id="confirm-button" onclick="confirmRegistration()" style="display:none;">Confirmar</button>
+  <p><a href="#" onclick="toggleForm()" id="toggle-link">¿No tienes cuenta? Regístrate</a></p>
+  <p><a href="#" onclick="showRecovery()" id="forgot-link">¿Olvidaste tu contraseña?</a></p>
+  <div id="recovery-container" style="display: none;">
+    <input type="email" id="recovery-email" placeholder="Ingresa tu correo" />
+    <button onclick="resetPassword()" id="recovery-button">Recuperar</button>
   </div>
+</div>
 
+  </div>  <!-- DASHBOARD -->  <div class="header" id="dashboard-header">
+    <div class="user-info">
+      <span id="welcome-message">Bienvenido usuario: Cargando...</span>
+      <span class="vip-level" id="vip-level">VIP 1</span>
+    </div>
+    <div class="menu-toggle" id="menu-toggle">☰ Menú</div>
+  </div>
   <div class="sidebar" id="sidebar">
-    <a href="#">Inicio</a>
-    <a href="#">Inversiones</a>
-    <a href="#">Referidos</a>
     <a href="#">Perfil</a>
+    <a href="#">Depósito</a>
+    <a href="#">Retiro</a>
+    <a href="#">Calculadora</a>
+    <a href="#">Referidos</a>
     <a href="#">Cerrar sesión</a>
   </div>
-
-  <div class="container">
-    <select class="language-selector">
-      <option value="es">Español</option>
-      <option value="en">English</option>
-      <option value="pt">Português</option>
-    </select>
-
-    <h2>Iniciar Sesión</h2>
-    <input type="text" placeholder="Usuario" />
-    <input type="password" placeholder="Contraseña" />
-    <button>Entrar</button>
-    <a href="#">¿Olvidaste tu contraseña?</a>
+  <div class="top-description" id="top-description">
+    <h2>Bienvenido a ProfitLink</h2>
+    <p>Se trata de una plataforma de inversión que genera rendimientos semanales, quincenales y mensuales.</p>
+    <p><strong>7% semanal</strong></p>
+    <p><strong>20% quincenal</strong></p>
+    <p><strong>45% mensual</strong></p>
+    <p>ProfitLink se dedica a ayudar a emprendimientos y empresas, obteniendo estos rendimientos de manera sostenible.</p>
+    <p>Además, contamos con un <strong>programa de referidos</strong>.</p>
+    <p><strong>Métodos de depósito y retiro:</strong> Aceptamos ARS y USDT.</p>
+    <p><strong>¡Gracias por confiar en ProfitLink!</strong></p>
   </div>
-
-  <script>
-    function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("show");
+  <div class="background-logo"></div>
+  <div class="content" id="dashboard-content">
+    <h1 class="welcome-message">Plataforma de inversión activa</h1>
+  </div>  <script>
+    function authenticate() {
+      const user = document.getElementById("username").value;
+      const vip = "VIP 3";
+      document.getElementById("login-container").style.display = "none";
+      document.getElementById("dashboard-header").style.display = "flex";
+      document.getElementById("sidebar").style.display = "block";
+      document.getElementById("top-description").style.display = "block";
+      document.querySelector(".background-logo").style.display = "block";
+      document.getElementById("dashboard-content").style.display = "block";
+      document.getElementById("welcome-message").textContent = `Bienvenido usuario: ${user}`;
+      document.getElementById("vip-level").textContent = vip;
     }
-  </script>
-</body>
+
+    function toggleForm() {
+      let emailField = document.getElementById("email");
+      let confirmButton = document.getElementById("confirm-button");
+      let authButton = document.getElementById("auth-button");
+      let toggleLink = document.getElementById("toggle-link");
+
+      if (emailField.style.display === "none") {
+        emailField.style.display = "block";
+        confirmButton.style.display = "block";
+        authButton.style.display = "none";
+        toggleLink.innerText = "¿Ya tienes cuenta? Inicia sesión";
+      } else {
+        emailField.style.display = "none";
+        confirmButton.style.display = "none";
+        authButton.style.display = "block";
+        toggleLink.innerText = "¿No tienes cuenta? Regístrate";
+      }
+    }
+
+    function showRecovery() {
+      document.getElementById("recovery-container").style.display = "block";
+    }
+
+    function resetPassword() {
+      alert("Se ha enviado un enlace de recuperación a tu correo");
+    }
+
+    function changeLanguage(lang) {
+      const translations = {
+        es: { title: "Iniciar Sesión", button: "Iniciar Sesión", link: "¿No tienes cuenta? Regístrate" },
+        en: { title: "Login", button: "Login", link: "Don't have an account? Sign up" },
+        pt: { title: "Entrar", button: "Entrar", link: "Não tem conta? Cadastre-se" },
+        zh: { title: "登录", button: "登录", link: "没有帐户？注册" }
+      };
+      document.getElementById("form-title").innerText = translations[lang].title;
+      document.getElementById("auth-button").innerText = translations[lang].button;
+      document.getElementById("toggle-link").innerText = translations[lang].link;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const menuToggle = document.getElementById("menu-toggle");
+      const sidebar = document.getElementById("sidebar");
+      menuToggle.addEventListener("click", function (event) {
+        event.stopPropagation();
+        sidebar.classList.toggle("show");
+      });
+      document.addEventListener("click", function (event) {
+        if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+          sidebar.classList.remove("show");
+        }
+      });
+    });
+  </script></body>
 </html>
