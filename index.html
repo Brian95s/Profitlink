@@ -1,5 +1,7 @@
-<!DOCTYPE html><html lang="es"><head>  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ProfitLink - Plataforma de Inversión</title>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
@@ -9,41 +11,44 @@
       background: linear-gradient(to right, #ff7e5f, #feb47b);
       color: white;
       font-family: Arial, sans-serif;
+      height: 100vh;
+      margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      flex-direction: column;
     }
     .container {
-      background-color: rgba(0, 0, 0, 0.8);
-      padding: 20px;
-      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 30px 25px;
+      border-radius: 15px;
       text-align: center;
-      width: 300px;
-      position: relative;
+      width: 100%;
+      max-width: 360px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
     }
-    .language-selector {
-      margin-bottom: 10px;
+    input, button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
     }
-    .dashboard {
-      text-align: center;
-      margin-top: 20px;
-      width: 80%;
+    button {
+      background-color: #ff7e5f;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
-    .vip-level {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 5px 10px;
-      border-radius: 5px;
-    }
+    button:hover { background-color: #feb47b; }
+    .dashboard { text-align: center; display: none; }
+    .logout-btn { background-color: red; }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="auth-container">
     <select class="language-selector" onchange="changeLanguage(this.value)">
       <option value="es">🇪🇸 Español</option>
       <option value="en">🇺🇸 English</option>
@@ -56,62 +61,14 @@
     <input type="password" id="password" placeholder="Contraseña" required />
     <p class="error-message" id="error-message"></p>
     <button onclick="authenticate()" id="auth-button">Iniciar Sesión</button>
-    <button id="confirm-button" onclick="confirmRegistration()" style="display:none;">Confirmar</button>
+    <button id="confirm-button" onclick="registerUser()" style="display:none;">Confirmar</button>
     <p><a href="#" onclick="toggleForm()" id="toggle-link">¿No tienes cuenta? Regístrate</a></p>
-    <p><a href="#" onclick="showRecovery()" id="forgot-link">¿Olvidaste tu contraseña?</a></p>
-    <div id="recovery-container" style="display: none;">
-      <input type="email" id="recovery-email" placeholder="Ingresa tu correo" />
-      <button onclick="resetPassword()" id="recovery-button">Recuperar</button>
-    </div>
+    <p><a href="#" onclick="showRecovery()">¿Olvidaste tu contraseña?</a></p>
   </div>
-  <div class="dashboard" style="display: none;">
-    <h1>Bienvenido usuario: <span id="user-name">Cargando...</span></h1>
+  <div class="dashboard" id="dashboard">
+    <h1>Bienvenido, <span id="user-name">Usuario</span></h1>
+    <button onclick="logout()" class="logout-btn">Cerrar Sesión</button>
   </div>
-  <script>
-    function authenticate() {
-      alert("Éxito");
-      setTimeout(() => {
-        document.querySelector(".container").style.display = "none";
-        document.querySelector(".dashboard").style.display = "block";
-        document.getElementById("user-name").innerText = "UsuarioEjemplo";
-      }, 1000);
-    }
-    function toggleForm() {
-      let emailField = document.getElementById("email");
-      let confirmButton = document.getElementById("confirm-button");
-      let authButton = document.getElementById("auth-button");
-      let toggleLink = document.getElementById("toggle-link");
-      if (emailField.style.display === "none") {
-        emailField.style.display = "block";
-        confirmButton.style.display = "block";
-        authButton.style.display = "none";
-        toggleLink.innerText = "¿Ya tienes cuenta? Inicia sesión";
-      } else {
-        emailField.style.display = "none";
-        confirmButton.style.display = "none";
-        authButton.style.display = "block";
-        toggleLink.innerText = "¿No tienes cuenta? Regístrate";
-      }
-    }
-    function showRecovery() {
-      document.getElementById("recovery-container").style.display = "block";
-    }
-    function resetPassword() {
-      alert("Se ha enviado un enlace de recuperación a tu correo");
-    }
-    function changeLanguage(lang) {
-      const translations = {
-        es: { title: "Iniciar Sesión", button: "Iniciar Sesión", link: "¿No tienes cuenta? Regístrate", username: "Nombre de usuario", password: "Contraseña" },
-        en: { title: "Login", button: "Login", link: "Don't have an account? Sign up", username: "Username", password: "Password" },
-        pt: { title: "Entrar", button: "Entrar", link: "Não tem conta? Cadastre-se", username: "Nome de usuário", password: "Senha" },
-        zh: { title: "登录", button: "登录", link: "没有帐户？注册", username: "用户名", password: "密码" }
-      };
-      document.getElementById("form-title").innerText = translations[lang].title;
-      document.getElementById("auth-button").innerText = translations[lang].button;
-      document.getElementById("toggle-link").innerText = translations[lang].link;
-      document.getElementById("username").placeholder = translations[lang].username;
-      document.getElementById("password").placeholder = translations[lang].password;
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
