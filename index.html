@@ -26,19 +26,13 @@
       width: 300px;
       position: relative;
     }
-    .menu {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      cursor: pointer;
+    .language-selector {
+      margin-bottom: 10px;
     }
     .dashboard {
       text-align: center;
       margin-top: 20px;
       width: 80%;
-    }
-    .dashboard h1, .dashboard p {
-      color: white;
     }
     .vip-level {
       position: absolute;
@@ -47,24 +41,6 @@
       background: rgba(0, 0, 0, 0.7);
       padding: 5px 10px;
       border-radius: 5px;
-    }
-    .menu-items {
-      display: none;
-      background: rgba(0, 0, 0, 0.9);
-      padding: 10px;
-      position: absolute;
-      left: 10px;
-      top: 50px;
-      border-radius: 5px;
-    }
-    .menu-items a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      padding: 5px;
-    }
-    .menu-items a:hover {
-      background: #ff7e5f;
     }
   </style>
 </head>
@@ -89,43 +65,50 @@
       <input type="email" id="recovery-email" placeholder="Ingresa tu correo" />
       <button onclick="resetPassword()" id="recovery-button">Recuperar</button>
     </div>
-  </div>  <div class="dashboard" style="display: none;">
-    <div class="menu" onclick="toggleMenu()">☰ Menú</div>
-    <div class="vip-level">VIP 1</div>
+  </div>
+  <div class="dashboard" style="display: none;">
     <h1>Bienvenido usuario: <span id="user-name">Cargando...</span></h1>
-    <h2>Bienvenido a ProfitLink</h2>
-    <p>Plataforma de inversión con rendimientos:</p>
-    <p><strong>7% semanal</strong></p>
-    <p><strong>20% quincenal</strong></p>
-    <p><strong>45% mensual</strong></p>
-    <p>ProfitLink apoya emprendimientos y empresas, generando rendimientos de manera sostenible.</p>
-    <p><strong>Programa de referidos:</strong> Gana por cada referido y retira dinero a tu cuenta.</p>
-    <p><strong>Métodos de depósito y retiro:</strong> ARS y USDT.</p>
-    <p>¡Gracias por confiar en ProfitLink!</p><div class="menu-items" id="menu-items">
-  <a href="#">Perfil</a>
-  <a href="#">Depósito</a>
-  <a href="#">Retiro</a>
-  <a href="#">Calculadora</a>
-  <a href="#">Referidos</a>
-  <a href="#" onclick="logout()">Cerrar sesión</a>
-</div>
-
-  </div>  <script>
-    function toggleMenu() {
-      const menu = document.getElementById("menu-items");
-      menu.style.display = menu.style.display === "block" ? "none" : "block";
-    }
+  </div>
+  <script>
     function authenticate() {
       document.querySelector(".container").style.display = "none";
       document.querySelector(".dashboard").style.display = "block";
       document.getElementById("user-name").innerText = "UsuarioEjemplo";
     }
-    function logout() {
-      document.querySelector(".dashboard").style.display = "none";
-      document.querySelector(".container").style.display = "flex";
+    function toggleForm() {
+      let emailField = document.getElementById("email");
+      let confirmButton = document.getElementById("confirm-button");
+      let authButton = document.getElementById("auth-button");
+      let toggleLink = document.getElementById("toggle-link");
+      if (emailField.style.display === "none") {
+        emailField.style.display = "block";
+        confirmButton.style.display = "block";
+        authButton.style.display = "none";
+        toggleLink.innerText = "¿Ya tienes cuenta? Inicia sesión";
+      } else {
+        emailField.style.display = "none";
+        confirmButton.style.display = "none";
+        authButton.style.display = "block";
+        toggleLink.innerText = "¿No tienes cuenta? Regístrate";
+      }
     }
-    function confirmRegistration() {
-      alert("Éxito");
+    function showRecovery() {
+      document.getElementById("recovery-container").style.display = "block";
     }
-  </script></body>
+    function resetPassword() {
+      alert("Se ha enviado un enlace de recuperación a tu correo");
+    }
+    function changeLanguage(lang) {
+      const translations = {
+        es: { title: "Iniciar Sesión", button: "Iniciar Sesión", link: "¿No tienes cuenta? Regístrate" },
+        en: { title: "Login", button: "Login", link: "Don't have an account? Sign up" },
+        pt: { title: "Entrar", button: "Entrar", link: "Não tem conta? Cadastre-se" },
+        zh: { title: "登录", button: "登录", link: "没有帐户？注册" }
+      };
+      document.getElementById("form-title").innerText = translations[lang].title;
+      document.getElementById("auth-button").innerText = translations[lang].button;
+      document.getElementById("toggle-link").innerText = translations[lang].link;
+    }
+  </script>
+</body>
 </html>
